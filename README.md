@@ -1,5 +1,7 @@
 # PROYECTO_BI
 
+Integrantes: Diego Saldaña, Diego Rodríguez, Sebastián Vinces y Mario Auqui
+
 Descripción de la fuente de datos y problemática
 
 El presente proyecto utiliza el dataset público US-Accidents, desarrollado por investigadores de The Ohio State University con el objetivo de recopilar y analizar información relacionada con accidentes de tránsito ocurridos en Estados Unidos. El dataset fue presentado originalmente en 2019 y surgió debido a la necesidad de contar con información masiva y enriquecida que permitiera estudiar patrones espaciales, temporales y ambientales asociados a la ocurrencia de accidentes de tránsito (Moosavi et al., 2019).
