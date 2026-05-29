@@ -1,6 +1,6 @@
 # PROYECTO_BI
 
-Integrantes: Diego Saldaña, Diego Rodríguez, Sebastián Vinces y Mario Auqui
+**Integrantes:** Diego Saldaña, Diego Rodríguez, Sebastián Vinces y Mario Auqui
 
 Descripción de la fuente de datos y problemática
 
@@ -14,14 +14,27 @@ Con el objetivo de enriquecer la información, los autores incorporaron datos me
 
 Adicionalmente, se incorporó información temporal mediante la API de TimeAndDate, permitiendo clasificar los accidentes según periodos del día y condiciones de iluminación, como sunrise/sunset y distintos niveles de twilight (Moosavi et al., 2019). Gracias a este proceso de enriquecimiento, el dataset permite analizar los accidentes desde distintas perspectivas y facilita la identificación de tendencias relacionadas con factores climáticos, temporales y geográficos.
 
-La problemática identificada en este entorno empresarial se centra en la gran cantidad de datos generados diariamente y en la dificultad para convertir dicha información en conocimiento útil para la toma de decisiones estratégicas. Aunque existen millones de registros disponibles, muchas organizaciones presentan limitaciones para:
-•	Analizar patrones de accidentes de manera eficiente. 
-•	Identificar zonas de alto riesgo. 
-•	Generar reportes estratégicos para prevención de accidentes. 
-•	Relacionar variables como clima, horario, ubicación y severidad del accidente. 
-Debido a ello, la información suele encontrarse dispersa y poco estructurada para procesos analíticos avanzados. Esto dificulta la implementación de estrategias preventivas y la optimización de recursos destinados a seguridad vial.
-
-En ese contexto, el presente proyecto propone el desarrollo de una solución de Business Intelligence que permita consolidar y analizar la información mediante modelos dimensionales y dashboards interactivos. Con ello se busca mejorar la capacidad de análisis de accidentes de tránsito y facilitar la toma de decisiones basada en datos.
+## Problemática
+ 
+Los accidentes de tránsito representan una problemática importante por su impacto en la seguridad vial, la movilidad urbana y los costos económicos derivados de congestión vehicular, daños materiales y emergencias.
+ 
+La gran cantidad de datos generados diariamente dificulta convertir dicha información en conocimiento útil para la toma de decisiones estratégicas. Aunque existen millones de registros disponibles, muchas organizaciones presentan limitaciones para:
+ 
+- Analizar patrones de accidentes de manera eficiente.
+- Identificar zonas de alto riesgo.
+- Generar reportes estratégicos para prevención de accidentes.
+- Relacionar variables como clima, horario, ubicación y severidad del accidente.
+> La información suele encontrarse **dispersa y poco estructurada** para procesos analíticos avanzados, dificultando la implementación de estrategias preventivas y la optimización de recursos destinados a seguridad vial.
+ 
+---
+ 
+## Propuesta de Solución
+ 
+El presente proyecto propone el desarrollo de una solución de **Business Intelligence** que permita consolidar y analizar la información mediante:
+ 
+- Modelos dimensionales (esquema estrella)
+- Dashboards interactivos
+Con ello se busca mejorar la capacidad de análisis de accidentes de tránsito y facilitar la **toma de decisiones basada en datos**.
 
 ## Justificación del Modelo Dimensional
 
@@ -40,7 +53,7 @@ En ese contexto, el presente proyecto propone el desarrollo de una solución de 
 | `Stop` | DimStop | Las paradas generan puntos de conflicto en la vía |
 | `Traffic_Signal` | DimTraffic | Indicador clave del nivel de control del tráfico |
 | `Civil_Twilight` | DimCivilTwilight | Indica condición de luz natural, relevante para visibilidad |
-| `End_Time`, `Distance(mi)`, métricas climáticas | FactAccidente | Son medidas cuantitativas únicas por accidente |
+| `duracion_minutos`, `Distance(mi)`, métricas climáticas | FactAccidente | Son medidas cuantitativas únicas por accidente |
 
 ---
 
