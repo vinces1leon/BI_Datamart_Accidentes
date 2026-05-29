@@ -21,6 +21,59 @@ Debido a ello, la información suele encontrarse dispersa y poco estructurada pa
 
 En ese contexto, el presente proyecto propone el desarrollo de una solución de Business Intelligence que permita consolidar y analizar la información mediante modelos dimensionales y dashboards interactivos. Con ello se busca mejorar la capacidad de análisis de accidentes de tránsito y facilitar la toma de decisiones basada en datos.
 
+## Justificación del Modelo Dimensional
+
+### Columnas incluidas y su dimensión
+
+| Campo raw | Dimensión | Justificación |
+|---|---|---|
+| `Severity` | DimSeverity | Eje central del análisis: mide el impacto del accidente |
+| `Start_Time` | DimFecha | Permite análisis temporal por hora, día, mes, año y fin de semana |
+| `Start_Lat`, `Start_Lng` | DimUbicacionGeo | Coordenadas exactas para mapas y clustering geográfico |
+| `Street`, `City`, `County`, `State`, `Zipcode`, `Timezone` | DimLugar | Agrupación geográfica administrativa para filtros en dashboards |
+| `Weather_Condition` | DimClima | Variable clave para correlacionar clima con accidentes |
+| `Crossing` | DimCrossing | Infraestructura vial con impacto directo en siniestralidad |
+| `Junction` | DimJunction | Los cruces son puntos críticos de ocurrencia de accidentes |
+| `Station` | DimStation | Las zonas de transporte incrementan el riesgo vial |
+| `Stop` | DimStop | Las paradas generan puntos de conflicto en la vía |
+| `Traffic_Signal` | DimTraffic | Indicador clave del nivel de control del tráfico |
+| `Civil_Twilight` | DimCivilTwilight | Indica condición de luz natural, relevante para visibilidad |
+| `End_Time`, `Distance(mi)`, métricas climáticas | FactAccidente | Son medidas cuantitativas únicas por accidente |
+
+---
+
+### Columnas excluidas y por qué
+
+| Campo raw | Razón de exclusión |
+|---|---|
+| `Source` | Metadato administrativo sin valor analítico para BI |
+| `End_Lat`, `End_Lng` | Redundante con `Start_Lat/Lng`; el punto de inicio es el relevante en accidentes |
+| `Description` | Texto libre VARCHAR(MAX), no agrupable ni filtrable en dashboards |
+| `Country` | El dataset es 100% EE.UU. — cardinalidad 1, no aporta segmentación |
+| `Airport_Code` | Alta cardinalidad sin valor analítico directo; cubierto por `DimLugar` |
+| `Weather_Timestamp` | Redundante con `Start_Time`; es la hora del reporte meteorológico, no del accidente |
+| `Wind_Direction` | Baja relevancia analítica para BI de accidentes vs. el costo de una dimensión extra |
+| `Amenity`, `Bump`, `Give_Way`, `No_Exit`, `Railway`, `Roundabout`, `Traffic_Calming`, `Turning_Loop` | Casi siempre `False` en el dataset — baja varianza, no aportan segmentación útil |
+| `Sunrise_Sunset` | Cubierto con mayor granularidad por `Civil_Twilight` y `DimFecha.hora` |
+| `Nautical_Twilight`, `Astronomical_Twilight` | Demasiado técnicos para dashboards ejecutivos; `Civil_Twilight` es suficiente |
+
+---
+
+### Criterios generales del diseño
+
+El modelo fue diseñado para responder preguntas de negocio concretas:
+
+- **¿En qué horarios y días ocurren más accidentes graves?** → `DimFecha` + `DimSeverity`
+- **¿Qué condiciones climáticas están asociadas a mayor severidad?** → `DimClima`
+- **¿Qué zonas geográficas concentran los accidentes?** → `DimLugar` + `DimUbicacionGeo`
+- **¿Qué infraestructura vial está presente en accidentes graves?** → `DimCrossing`, `DimJunction`, `DimStation`, `DimStop`, `DimTraffic`
+
+Se excluyeron campos que cumplían al menos uno de estos criterios:
+- Cardinalidad de 1 (como `Country`)
+- Texto libre no agregable (como `Description`)
+- Baja varianza — casi siempre el mismo valor (como `Turning_Loop`, `Roundabout`)
+- Redundancia con otro campo ya incluido (como `Sunrise_Sunset` vs. `Civil_Twilight`)
+
 REFERENCIAS
 
 Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2019). A countrywide traffic accident dataset. arXiv. https://arxiv.org/abs/1906.05409
