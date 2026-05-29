@@ -89,7 +89,7 @@ Se excluyeron campos que cumplían al menos uno de estos criterios:
 - Baja varianza — casi siempre el mismo valor (como `Turning_Loop`, `Roundabout`)
 - Redundancia con otro campo ya incluido (como `Sunrise_Sunset` vs. `Civil_Twilight`)
 
-REFERENCIAS
+## Referencias
 
 Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2019). A countrywide traffic accident dataset. arXiv. https://arxiv.org/abs/1906.05409
 
