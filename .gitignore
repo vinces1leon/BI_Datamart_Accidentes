@@ -1,0 +1,25 @@
+# ===== PYTHON =====
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ===== ENTORNOS VIRTUALES =====
+venv/
+env/
+.venv/
+.env
+
+# ===== IDEs =====
+.vscode/
+.idea/
+
+# ===== SISTEMA OPERATIVO =====
+.DS_Store
+Thumbs.db
+
+# ===== DATOS PESADOS =====
+*.csv
+*.xlsx
+
+# ===== LOGS =====
+*.log
