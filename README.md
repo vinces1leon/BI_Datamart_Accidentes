@@ -6,7 +6,41 @@
 
 ## 1. Marco Teórico
 
+### 1.1 Business Intelligence
 
+Business Intelligence (BI) es el conjunto de estrategias, procesos, tecnologías y herramientas orientadas a la recopilación, integración, análisis y presentación de información empresarial con el fin de apoyar la toma de decisiones. A diferencia de los sistemas transaccionales, cuyo objetivo es el registro eficiente de operaciones, los sistemas de BI están diseñados para consolidar grandes volúmenes de datos históricos y transformarlos en conocimiento accionable. En el contexto de seguridad vial, el BI permite convertir millones de registros de accidentes en patrones identificables, KPIs significativos y visualizaciones que faciliten la acción preventiva.
+
+### 1.2 Data Warehouse y Datamart
+
+Un Data Warehouse (DWH) es un repositorio centralizado que integra datos provenientes de múltiples fuentes operacionales, transformados y estructurados para el análisis. Su diseño privilegia la velocidad de consulta y la consistencia histórica sobre la eficiencia transaccional. Un datamart es un subconjunto temático de un Data Warehouse, orientado a un área funcional específica —en este caso, la accidentalidad vial— que permite obtener respuestas rápidas a preguntas de negocio concretas. El presente proyecto implementa un datamart independiente sobre el dataset US-Accidents, habilitando consultas multidimensionales sobre severidad, clima, geografía y tiempo.
+
+### 1.3 Modelamiento Dimensional
+
+El modelamiento dimensional es la técnica de diseño de bases de datos analíticas propuesta por Ralph Kimball, cuyo objetivo es estructurar los datos de manera que sean intuitivos para el análisis y eficientes para la consulta. Se basa en dos tipos de tablas fundamentales:
+
+- **Tabla de hechos (Fact Table):** almacena las métricas cuantitativas del proceso de negocio —en este caso, FactAccidente— junto con las claves foráneas que apuntan a las dimensiones. Las medidas incluyen duración del accidente, distancia del tramo afectado, temperatura, humedad, visibilidad y precipitación.
+
+- **Tablas de dimensiones (Dimension Tables):** describen el contexto de cada hecho. En este proyecto se modelaron doce dimensiones: DimSeverity, DimFecha, DimUbicacionGeo, DimLugar, DimClima, DimCrossing, DimJunction, DimStation, DimStop, DimTraffic y DimCivilTwilight.
+
+### 1.4 Esquema Estrella
+
+El esquema estrella (star schema) es la implementación más común del modelamiento dimensional. Se caracteriza por una tabla de hechos central conectada directamente a múltiples tablas de dimensión sin normalización adicional. Esta estructura permite que los motores de consulta como SQL Server o herramientas de BI como Power BI ejecuten operaciones de agregación y filtrado de manera altamente eficiente, dado que las uniones (joins) se realizan siempre entre la tabla de hechos y una sola dimensión a la vez, evitando consultas complejas con múltiples niveles de relación.
+
+En el presente proyecto, la tabla FactAccidente actúa como el centro del esquema, conectándose a once dimensiones que permiten analizar cada accidente desde perspectivas temporales, geográficas, climáticas e infraestructurales.
+
+### 1.5 Proceso ETL (Extract, Transform, Load)
+
+El proceso ETL comprende las etapas de extracción de datos desde las fuentes originales, transformación para limpiar, estandarizar e integrar la información, y carga en el modelo dimensional destino. En este proyecto, el dataset US-Accidents provee los datos crudos que deben ser procesados para derivar campos calculados como `duracion_minutos`, separar atributos en sus dimensiones correspondientes, y garantizar la integridad referencial entre la tabla de hechos y las dimensiones.
+
+### 1.6 KPIs y Análisis Multidimensional
+
+Los Indicadores Clave de Rendimiento (KPIs) son métricas que permiten evaluar el desempeño de un proceso respecto a objetivos definidos. En el contexto de seguridad vial, los KPIs propuestos —tasa de severidad alta, duración promedio del accidente, densidad geográfica de incidentes e índice de infraestructura crítica— permiten monitorear el comportamiento de la accidentalidad y orientar decisiones preventivas.
+
+El análisis multidimensional (OLAP) permite navegar estos indicadores con distintos niveles de granularidad, aplicando operaciones como drill-down (desagregar, por ejemplo, de estado a ciudad), roll-up (agregar de hora a franja del día) y slice and dice (filtrar por condición climática o tipo de infraestructura). Esta capacidad analítica es la que distingue a un datamart de una base de datos operacional simple.
+
+### 1.7 Dashboards e Inteligencia Operacional
+
+Los dashboards interactivos son la capa de presentación del sistema de BI, permitiendo a los usuarios explorar los datos sin necesidad de conocimientos técnicos avanzados. En proyectos de seguridad vial, los dashboards facilitan la identificación visual de zonas de alto riesgo, patrones horarios y correlaciones entre condiciones ambientales y severidad de accidentes, traduciendo el análisis técnico en información directamente utilizable para la toma de decisiones estratégicas.
 
 ---
 
@@ -75,7 +109,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 ## 5. Modelamiento de Data Dimensional
 
-![Modelo Multidimensional](Modelo_multidimensional.PNG)
+![Modelo Multidimensional](Modelo%20multidimensional.PNG)
 
 ---
 
