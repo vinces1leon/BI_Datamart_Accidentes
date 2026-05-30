@@ -1,12 +1,16 @@
-# PROYECTO_BI
+# BI_Datamart_Accidentes — Análisis de Accidentes de Tránsito en EE.UU.
 
 **Integrantes:** Diego Saldaña, Diego Rodríguez, Sebastián Vinces y Mario Auqui
 
-### 1. Marco Teórico
+---
+
+## 1. Marco Teórico
 
 
 
-### 2. Descripción de la Fuente de Datos
+---
+
+## 2. Descripción de la Fuente de Datos
 
 El presente proyecto utiliza el dataset público US-Accidents, desarrollado por investigadores de The Ohio State University con el objetivo de recopilar y analizar información relacionada con accidentes de tránsito ocurridos en Estados Unidos. El dataset fue presentado originalmente en 2019 y surgió debido a la necesidad de contar con información masiva y enriquecida que permitiera estudiar patrones espaciales, temporales y ambientales asociados a la ocurrencia de accidentes de tránsito (Moosavi et al., 2019).
 
@@ -18,7 +22,9 @@ Con el objetivo de enriquecer la información, los autores incorporaron datos me
 
 Adicionalmente, se incorporó información temporal mediante la API de TimeAndDate, permitiendo clasificar los accidentes según periodos del día y condiciones de iluminación, como sunrise/sunset y distintos niveles de twilight (Moosavi et al., 2019). Gracias a este proceso de enriquecimiento, el dataset permite analizar los accidentes desde distintas perspectivas y facilita la identificación de tendencias relacionadas con factores climáticos, temporales y geográficos.
 
-## Problemática
+---
+
+## 3. Problemática
 
 Los accidentes de tránsito representan una problemática importante por su impacto en la seguridad vial, la movilidad urbana y los costos económicos derivados de congestión vehicular, daños materiales y emergencias.
 
@@ -31,7 +37,9 @@ La gran cantidad de datos generados diariamente dificulta convertir dicha inform
 
 > La información suele encontrarse **dispersa y poco estructurada** para procesos analíticos avanzados, dificultando la implementación de estrategias preventivas y la optimización de recursos destinados a seguridad vial.
 
-## Solución Propuesta
+---
+
+## 4. Solución Propuesta
 
 El presente proyecto propone el desarrollo de una solución de **Business Intelligence** que permita consolidar y analizar la información mediante:
 
@@ -40,11 +48,11 @@ El presente proyecto propone el desarrollo de una solución de **Business Intell
 
 Con ello se busca mejorar la capacidad de análisis de accidentes de tránsito y facilitar la **toma de decisiones basada en datos**.
 
-### Objetivo del Proyecto
+### 4.1 Objetivo del Proyecto
 
 Construir un datamart que habilite consultas rápidas, agregaciones multidimensionales y la generación de KPIs relevantes para la gestión de la seguridad vial, facilitando la identificación de patrones de accidentalidad y la toma de decisiones preventivas basadas en datos.
 
-### Preguntas de Negocio y Decisiones Esperadas
+### 4.2 Preguntas de Negocio y Decisiones Esperadas
 
 - ¿En qué horarios y días de la semana ocurren más accidentes de alta severidad?
 - ¿Qué estados y ciudades concentran la mayor cantidad de accidentes graves?
@@ -52,8 +60,7 @@ Construir un datamart que habilite consultas rápidas, agregaciones multidimensi
 - ¿Qué tipo de infraestructura vial (cruces, semáforos, intersecciones) está más presente en accidentes graves?
 - ¿Cuál es la duración promedio de los accidentes según severidad, clima y zona geográfica?
 
-
-### KPIs propuestos para el Datamart
+### 4.3 KPIs Propuestos para el Datamart
 
 - **Tasa de severidad alta:** proporción de accidentes con severidad 3 o 4 sobre el total de registros.
 - **Duración promedio del accidente:** media de `duracion_minutos` por dimensión (severidad, clima, lugar, franja horaria).
@@ -64,13 +71,17 @@ Construir un datamart que habilite consultas rápidas, agregaciones multidimensi
 
 Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimensiones conformadas (fecha, lugar, clima, severidad) para permitir cortes consistentes y comparables.
 
-## Modelamiento de Data Dimensional
+---
 
-![Modelo Multidimensional](Modelo_multidimensional.PNG)
+## 5. Modelamiento de Data Dimensional
 
-## Diccionario de Datos
+![Modelo Multidimensional](Modelo%20multidimensional.PNG)
 
-### FactAccidente
+---
+
+## 6. Diccionario de Datos
+
+### 6.1 FactAccidente
 
 | Columna | Tipo | Descripción |
 |---|---|---|
@@ -96,18 +107,14 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | wind_speed | FLOAT | Velocidad del viento al momento del accidente, en millas por hora (`Wind_Speed(mph)`). |
 | precipitation | FLOAT | Nivel de precipitación al momento del accidente, en pulgadas (`Precipitation(in)`). |
 
----
-
-### DimSeverity
+### 6.2 DimSeverity
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de severidad. |
 | severity | INT | Nivel de impacto del accidente sobre el tráfico circundante. Escala del 1 al 4, donde 1 es el menor impacto y 4 el mayor (`Severity`). |
 
----
-
-### DimFecha
+### 6.3 DimFecha
 
 | Columna | Tipo | Descripción |
 |---|---|---|
@@ -120,9 +127,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | dia_semana | INT | Día de la semana (1 = lunes, 7 = domingo). |
 | es_fin_semana | BIT | Indicador de fin de semana (1 = sábado o domingo, 0 = día hábil). |
 
----
-
-### DimUbicacionGeo
+### 6.4 DimUbicacionGeo
 
 | Columna | Tipo | Descripción |
 |---|---|---|
@@ -130,9 +135,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | start_lat | FLOAT | Latitud del punto GPS donde inició el accidente (`Start_Lat`). |
 | start_lng | FLOAT | Longitud del punto GPS donde inició el accidente (`Start_Lng`). |
 
----
-
-### DimLugar
+### 6.5 DimLugar
 
 | Columna | Tipo | Descripción |
 |---|---|---|
@@ -144,63 +147,49 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | zipcode | NVARCHAR(20) | Código postal de la zona del accidente (`Zipcode`). |
 | timezone | NVARCHAR(50) | Zona horaria donde ocurrió el accidente (`Timezone`). |
 
----
-
-### DimClima
+### 6.6 DimClima
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de condición climática. |
 | weather_condition | NVARCHAR(100) | Descripción de las condiciones meteorológicas al momento del accidente (ej. Clear, Rain, Snow, Fog) (`Weather_Condition`). |
 
----
-
-### DimCrossing
+### 6.7 DimCrossing
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de cruce peatonal. |
 | crossing | BIT | Indica si el accidente ocurrió cerca de un cruce peatonal (True/False) (`Crossing`). |
 
----
-
-### DimJunction
+### 6.8 DimJunction
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de intersección vial. |
 | junction | BIT | Indica si el accidente ocurrió cerca de una intersección vial (True/False) (`Junction`). |
 
----
-
-### DimStation
+### 6.9 DimStation
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de estación. |
 | station | BIT | Indica si el accidente ocurrió cerca de una estación de transporte público (True/False) (`Station`). |
 
----
-
-### DimStop
+### 6.10 DimStop
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de parada. |
 | stop | BIT | Indica si el accidente ocurrió cerca de una señal de stop o parada de tránsito (True/False) (`Stop`). |
 
----
-
-### DimTraffic
+### 6.11 DimTraffic
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de señal de tráfico. |
 | traffic_signal | BIT | Indica si el accidente ocurrió cerca de un semáforo (True/False) (`Traffic_Signal`). |
 
----
-
-### DimCivilTwilight
+### 6.12 DimCivilTwilight
 
 | Columna | Tipo | Descripción |
 |---|---|---|
@@ -209,11 +198,8 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 ---
 
-## Referencias
+## 7. Referencias
 
 Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2019). A countrywide traffic accident dataset. arXiv. https://arxiv.org/abs/1906.05409
 
-Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2023). US-Accidents: A countrywide traffic accident dataset (2016–2023) [Dataset]. Kaggle. Kaggle US-Accidents Dataset https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
-
-
-
+Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2023). US-Accidents: A countrywide traffic accident dataset (2016–2023) [Dataset]. Kaggle. https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
