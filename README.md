@@ -75,7 +75,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 ## 5. Modelamiento de Data Dimensional
 
-![Modelo Multidimensional](Modelo%20multidimensional.PNG)
+![Modelo Multidimensional](Modelo_multidimensional.PNG)
 
 ---
 
