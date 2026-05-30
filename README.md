@@ -8,15 +8,15 @@
 
 ### 1.1 Business Intelligence
 
-Business Intelligence (BI) es el conjunto de estrategias, procesos, tecnologías y herramientas orientadas a la recopilación, integración, análisis y presentación de información empresarial con el fin de apoyar la toma de decisiones (Negash, 2004). A diferencia de los sistemas transaccionales, cuyo objetivo es el registro eficiente de operaciones, los sistemas de BI están diseñados para consolidar grandes volúmenes de datos históricos y transformarlos en conocimiento accionable (Turban et al., 2011). En el contexto de seguridad vial, el BI permite convertir millones de registros de accidentes en patrones identificables, KPIs significativos y visualizaciones que faciliten la acción preventiva.
+Business Intelligence (BI) es el conjunto de estrategias, procesos, tecnologías y herramientas orientadas a la recopilación, integración, análisis y presentación de información empresarial con el fin de apoyar la toma de decisiones (Negash, 2004). A diferencia de los sistemas transaccionales, los sistemas de BI están diseñados para consolidar grandes volúmenes de datos históricos y transformarlos en conocimiento accionable (Işık et al., 2013). En el contexto de seguridad vial, el BI permite convertir millones de registros de accidentes en patrones identificables, KPIs significativos y visualizaciones que faciliten la acción preventiva.
 
 ### 1.2 Data Warehouse y Datamart
 
-Un Data Warehouse (DWH) es un repositorio centralizado que integra datos provenientes de múltiples fuentes operacionales, transformados y estructurados para el análisis (Inmon, 2005). Su diseño privilegia la velocidad de consulta y la consistencia histórica sobre la eficiencia transaccional. Inmon (2005) define el Data Warehouse como una colección de datos orientada a temas, integrada, variante en el tiempo y no volátil, destinada a apoyar los procesos de toma de decisiones gerenciales. Un datamart es un subconjunto temático de un Data Warehouse, orientado a un área funcional específica —en este caso, la accidentalidad vial— que permite obtener respuestas rápidas a preguntas de negocio concretas (Kimball & Ross, 2013). El presente proyecto implementa un datamart independiente sobre el dataset US-Accidents, habilitando consultas multidimensionales sobre severidad, clima, geografía y tiempo.
+Un Data Warehouse es un repositorio centralizado que integra datos provenientes de múltiples fuentes operacionales, transformados y estructurados para el análisis. Su diseño privilegia la velocidad de consulta y la consistencia histórica sobre la eficiencia transaccional (Chaudhuri & Dayal, 1997). Un datamart es un subconjunto temático orientado a un área funcional específica —en este caso, la accidentalidad vial— que permite obtener respuestas rápidas a preguntas de negocio concretas. El presente proyecto implementa un datamart independiente sobre el dataset US-Accidents, habilitando consultas multidimensionales sobre severidad, clima, geografía y tiempo.
 
 ### 1.3 Modelamiento Dimensional
 
-El modelamiento dimensional es la técnica de diseño de bases de datos analíticas propuesta por Kimball & Ross (2013), cuyo objetivo es estructurar los datos de manera que sean intuitivos para el análisis y eficientes para la consulta. Se basa en dos tipos de tablas fundamentales:
+El modelamiento dimensional estructura los datos en tablas de hechos y dimensiones con el objetivo de hacer las consultas analíticas intuitivas y eficientes (Chaudhuri & Dayal, 1997). Se basa en dos tipos de tablas fundamentales:
 
 - **Tabla de hechos (Fact Table):** almacena las métricas cuantitativas del proceso de negocio —en este caso, FactAccidente— junto con las claves foráneas que apuntan a las dimensiones. Las medidas incluyen duración del accidente, distancia del tramo afectado, temperatura, humedad, visibilidad y precipitación.
 
@@ -24,23 +24,21 @@ El modelamiento dimensional es la técnica de diseño de bases de datos analíti
 
 ### 1.4 Esquema Estrella
 
-El esquema estrella (star schema) es la implementación más común del modelamiento dimensional (Kimball & Ross, 2013). Se caracteriza por una tabla de hechos central conectada directamente a múltiples tablas de dimensión sin normalización adicional. Esta estructura permite que los motores de consulta ejecuten operaciones de agregación y filtrado de manera altamente eficiente, dado que las uniones (joins) se realizan siempre entre la tabla de hechos y una sola dimensión a la vez, evitando consultas complejas con múltiples niveles de relación. Según Chaudhuri & Dayal (1997), esta simplicidad estructural es precisamente lo que hace al esquema estrella el estándar de facto en implementaciones de Data Warehouse orientadas al análisis.
+El esquema estrella (star schema) es la implementación más común del modelamiento dimensional, caracterizada por una tabla de hechos central conectada directamente a múltiples tablas de dimensión sin normalización adicional (Chaudhuri & Dayal, 1997). Esta estructura permite que los motores de consulta ejecuten operaciones de agregación y filtrado de manera altamente eficiente, dado que las uniones se realizan siempre entre la tabla de hechos y una sola dimensión a la vez.
 
 En el presente proyecto, la tabla FactAccidente actúa como el centro del esquema, conectándose a once dimensiones que permiten analizar cada accidente desde perspectivas temporales, geográficas, climáticas e infraestructurales.
 
 ### 1.5 Proceso ETL (Extract, Transform, Load)
 
-El proceso ETL comprende las etapas de extracción de datos desde las fuentes originales, transformación para limpiar, estandarizar e integrar la información, y carga en el modelo dimensional destino (Vassiliadis, 2009). Kimball & Ross (2013) señalan que el ETL suele representar entre el 60% y el 70% del esfuerzo total de un proyecto de Data Warehouse, dado que la calidad del dato en destino depende directamente de la rigurosidad de esta etapa. En este proyecto, el dataset US-Accidents provee los datos crudos que deben ser procesados para derivar campos calculados como "duracion_minutos", separar atributos en sus dimensiones correspondientes, y garantizar la integridad referencial entre la tabla de hechos y las dimensiones.
+El proceso ETL comprende las etapas de extracción de datos desde las fuentes originales, transformación para limpiar y estandarizar la información, y carga en el modelo dimensional destino (Vassiliadis, 2009). La calidad del dato en destino depende directamente de la rigurosidad de esta etapa, que en proyectos de Data Warehouse suele representar la mayor parte del esfuerzo de implementación. En este proyecto, el dataset US-Accidents provee los datos crudos que deben ser procesados para derivar campos calculados como "duracion_minutos", separar atributos en sus dimensiones correspondientes y garantizar la integridad referencial.
 
 ### 1.6 KPIs y Análisis Multidimensional
 
-Los Indicadores Clave de Rendimiento (KPIs) son métricas que permiten evaluar el desempeño de un proceso respecto a objetivos definidos (Turban et al., 2011). En el contexto de seguridad vial, los KPIs propuestos —tasa de severidad alta, duración promedio del accidente, densidad geográfica de incidentes e índice de infraestructura crítica— permiten monitorear el comportamiento de la accidentalidad y orientar decisiones preventivas.
-
-El análisis multidimensional OLAP (Online Analytical Processing), concepto introducido por Codd et al. (1993), permite navegar estos indicadores con distintos niveles de granularidad, aplicando operaciones como drill-down (desagregar, por ejemplo, de estado a ciudad), roll-up (agregar de hora a franja del día) y slice and dice (filtrar por condición climática o tipo de infraestructura). Esta capacidad analítica es la que distingue a un datamart de una base de datos operacional simple.
+Los Indicadores Clave de Rendimiento (KPIs) son métricas que permiten evaluar el desempeño de un proceso respecto a objetivos definidos. El análisis multidimensional OLAP (Online Analytical Processing) permite navegar estos indicadores con distintos niveles de granularidad (Chaudhuri & Dayal, 1997), aplicando operaciones como drill-down (desagregar de estado a ciudad), roll-up (agregar de hora a franja del día) y slice and dice (filtrar por condición climática o tipo de infraestructura). Esta capacidad analítica es la que distingue a un datamart de una base de datos operacional simple.
 
 ### 1.7 Dashboards e Inteligencia Operacional
 
-Los dashboards interactivos son la capa de presentación del sistema de BI, permitiendo a los usuarios explorar los datos sin necesidad de conocimientos técnicos avanzados (Few, 2006). Few (2006) define el dashboard como una pantalla visual de la información más importante necesaria para lograr uno o más objetivos, consolidada y organizada en una sola pantalla para que pueda monitorearse de un vistazo. En proyectos de seguridad vial, los dashboards facilitan la identificación visual de zonas de alto riesgo, patrones horarios y correlaciones entre condiciones ambientales y severidad de accidentes, traduciendo el análisis técnico en información directamente utilizable para la toma de decisiones estratégicas.
+Los dashboards interactivos son la capa de presentación del sistema de BI, permitiendo a los usuarios explorar los datos sin necesidad de conocimientos técnicos avanzados (Yigitbasioglu & Velcu, 2012). En proyectos de seguridad vial, los dashboards facilitan la identificación visual de zonas de alto riesgo, patrones horarios y correlaciones entre condiciones ambientales y severidad de accidentes, traduciendo el análisis técnico en información directamente utilizable para la toma de decisiones estratégicas.
 
 ---
 
@@ -234,22 +232,16 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 ## 7. Referencias
 
-Chaudhuri, S., & Dayal, U. (1997). An overview of data warehousing and OLAP technology. ACM SIGMOD Record, 26(1), 65–74. https://doi.org/10.1145/248603.248616
+Chaudhuri, S., & Dayal, U. (1997). An overview of data warehousing and OLAP technology. ACM SIGMOD Record. https://dl.acm.org/doi/10.1145/248603.248616
 
-Codd, E. F., Codd, S. B., & Salley, C. T. (1993). Providing OLAP to user-analysts: An IT mandate. E.F. Codd and Associates.
+Işık, Ö., Jones, M. C., & Sidorova, A. (2013). Business intelligence success: The roles of BI capabilities and decision environments. Information & Management. https://www.sciencedirect.com/science/article/pii/S0378720612000560
 
-Few, S. (2006). Information dashboard design: The effective visual communication of data. O'Reilly Media.
-
-Inmon, W. H. (2005). Building the data warehouse (4th ed.). Wiley.
-
-Kimball, R., & Ross, M. (2013). The data warehouse toolkit: The definitive guide to dimensional modeling (3rd ed.). Wiley.
-
-Moosavi, S., Samavatian, M. H., Parthasarathy, S., & Ramnath, R. (2019). A countrywide traffic accident dataset. arXiv. https://arxiv.org/abs/1906.05409
+Moosavi, S., et al. (2019). A countrywide traffic accident dataset. arXiv. https://arxiv.org/abs/1906.05409
 
 Moosavi, S. (2023). US-Accidents: A countrywide traffic accident dataset (2016–2023) [Dataset]. Kaggle. https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
 
-Negash, S. (2004). Business intelligence. Communications of the Association for Information Systems, 13(1), 177–195.
+Negash, S. (2004). Business intelligence. Communications of the AIS. https://aisel.aisnet.org/cais/vol13/iss1/15/
 
-Turban, E., Sharda, R., & Delen, D. (2011). Decision support and business intelligence systems (9th ed.). Pearson.
+Vassiliadis, P. (2009). A survey of extract–transform–load technology. IJDWM. https://www.igi-global.com/article/survey-extract-transform-load-technology/37174
 
-Vassiliadis, P. (2009). A survey of extract–transform–load technology. International Journal of Data Warehousing and Mining, 5(3), 1–27.
+Yigitbasioglu, O. M., & Velcu, O. (2012). A review of dashboards in performance management. The British Accounting Review. https://www.sciencedirect.com/science/article/pii/S0748575111000930
