@@ -6,15 +6,15 @@
 
 ## 1. Marco Teórico
 
-### 1.1 Business Intelligence
+### Business Intelligence
 
 Business Intelligence (BI) es el conjunto de estrategias, procesos, tecnologías y herramientas orientadas a la recopilación, integración, análisis y presentación de información empresarial con el fin de apoyar la toma de decisiones (Negash, 2004). A diferencia de los sistemas transaccionales, los sistemas de BI están diseñados para consolidar grandes volúmenes de datos históricos y transformarlos en conocimiento accionable (Işık et al., 2013). En el contexto de seguridad vial, el BI permite convertir millones de registros de accidentes en patrones identificables, KPIs significativos y visualizaciones que faciliten la acción preventiva.
 
-### 1.2 Data Warehouse y Datamart
+### Data Warehouse y Datamart
 
 Un Data Warehouse es un repositorio centralizado que integra datos provenientes de múltiples fuentes operacionales, transformados y estructurados para el análisis. Su diseño privilegia la velocidad de consulta y la consistencia histórica sobre la eficiencia transaccional (Chaudhuri & Dayal, 1997). Un datamart es un subconjunto temático orientado a un área funcional específica —en este caso, la accidentalidad vial— que permite obtener respuestas rápidas a preguntas de negocio concretas. El presente proyecto implementa un datamart independiente sobre el dataset US-Accidents, habilitando consultas multidimensionales sobre severidad, clima, geografía y tiempo.
 
-### 1.3 Modelamiento Dimensional
+### Modelamiento Dimensional
 
 El modelamiento dimensional estructura los datos en tablas de hechos y dimensiones con el objetivo de hacer las consultas analíticas intuitivas y eficientes (Chaudhuri & Dayal, 1997). Se basa en dos tipos de tablas fundamentales:
 
@@ -22,21 +22,21 @@ El modelamiento dimensional estructura los datos en tablas de hechos y dimension
 
 - **Tablas de dimensiones (Dimension Tables):** describen el contexto de cada hecho. En este proyecto se modelaron doce dimensiones: DimSeverity, DimFecha, DimUbicacionGeo, DimLugar, DimClima, DimCrossing, DimJunction, DimStation, DimStop, DimTraffic y DimCivilTwilight.
 
-### 1.4 Esquema Estrella
+### Esquema Estrella
 
 El esquema estrella (star schema) es la implementación más común del modelamiento dimensional, caracterizada por una tabla de hechos central conectada directamente a múltiples tablas de dimensión sin normalización adicional (Chaudhuri & Dayal, 1997). Esta estructura permite que los motores de consulta ejecuten operaciones de agregación y filtrado de manera altamente eficiente, dado que las uniones se realizan siempre entre la tabla de hechos y una sola dimensión a la vez.
 
 En el presente proyecto, la tabla FactAccidente actúa como el centro del esquema, conectándose a once dimensiones que permiten analizar cada accidente desde perspectivas temporales, geográficas, climáticas e infraestructurales.
 
-### 1.5 Proceso ETL (Extract, Transform, Load)
+### Proceso ETL (Extract, Transform, Load)
 
 El proceso ETL comprende las etapas de extracción de datos desde las fuentes originales, transformación para limpiar y estandarizar la información, y carga en el modelo dimensional destino (Vassiliadis, 2009). La calidad del dato en destino depende directamente de la rigurosidad de esta etapa, que en proyectos de Data Warehouse suele representar la mayor parte del esfuerzo de implementación. En este proyecto, el dataset US-Accidents provee los datos crudos que deben ser procesados para derivar campos calculados como "duracion_minutos", separar atributos en sus dimensiones correspondientes y garantizar la integridad referencial.
 
-### 1.6 KPIs y Análisis Multidimensional
+### KPIs y Análisis Multidimensional
 
 Los Indicadores Clave de Rendimiento (KPIs) son métricas que permiten evaluar el desempeño de un proceso respecto a objetivos definidos. El análisis multidimensional OLAP (Online Analytical Processing) permite navegar estos indicadores con distintos niveles de granularidad (Chaudhuri & Dayal, 1997), aplicando operaciones como drill-down (desagregar de estado a ciudad), roll-up (agregar de hora a franja del día) y slice and dice (filtrar por condición climática o tipo de infraestructura). Esta capacidad analítica es la que distingue a un datamart de una base de datos operacional simple.
 
-### 1.7 Dashboards e Inteligencia Operacional
+### Dashboards e Inteligencia Operacional
 
 Los dashboards interactivos son la capa de presentación del sistema de BI, permitiendo a los usuarios explorar los datos sin necesidad de conocimientos técnicos avanzados (Yigitbasioglu & Velcu, 2012). En proyectos de seguridad vial, los dashboards facilitan la identificación visual de zonas de alto riesgo, patrones horarios y correlaciones entre condiciones ambientales y severidad de accidentes, traduciendo el análisis técnico en información directamente utilizable para la toma de decisiones estratégicas.
 
@@ -233,23 +233,23 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 Para un análisis más delimitado y consistente, el análisis se centró exclusivamente en los datos correspondientes al año 2023, período en el que se registraron un total de 238,423 accidentes de tránsito en todo el territorio estadounidense.
 
-### 7.1 Patrones temporales y condición de luz
+### Patrones temporales y condición de luz
 
 La distribución horaria de accidentes revela una concentración marcada en las franjas de la mañana (6:00–9:00) y la tarde (15:00–18:00), coincidiendo con las horas pico de desplazamiento laboral. Los accidentes de severidad 2 dominan en términos de volumen, mientras que los de severidad 4 presentan mayor frecuencia relativa en horas nocturnas. Por día de la semana, martes y miércoles concentran los mayores volúmenes totales, con una proporción notablemente más alta de accidentes nocturnos respecto a los diurnos. Los fines de semana, aunque con menor volumen total, presentan una distribución nocturna más equilibrada, lo que sugiere un perfil de riesgo diferenciado.
 
-### 7.2 Distribución geográfica y severidad
+### Distribución geográfica y severidad
 
 California (CA) es el estado con mayor cantidad absoluta de accidentes, superando los 70,000 registros, seguido de Florida (FL) y Texas (TX). Sin embargo, Virginia (VA) destaca como el estado con la severidad promedio más alta (1,107 accidentes graves), lo que indica que la concentración de accidentes totales no necesariamente coincide con la mayor gravedad relativa. A nivel de ciudades, Atlanta y Chicago lideran en accidentes de alta severidad (3–4), mientras que Griffin presenta la severidad promedio más elevada del ranking, señalando focos de riesgo crítico que no corresponden a las ciudades más pobladas.
 
-### 7.3 Condiciones climáticas asociadas a accidentalidad
+### Condiciones climáticas asociadas a accidentalidad
 
 El clima despejado (Fair) concentra la mayor cantidad de accidentes en términos absolutos, seguido de condiciones nubladas (Cloudy y Mostly Cloudy). Este patrón se explica por la mayor exposición al tráfico bajo cielo abierto. No obstante, al analizar exclusivamente los accidentes de severidad 3–4, las mismas condiciones lideran el ranking, lo que refuerza que el volumen de exposición es el factor determinante. Condiciones adversas como lluvia ligera, nieve ligera y niebla, si bien con menores frecuencias absolutas, presentan severidades promedio más elevadas, evidenciando un riesgo diferencial en su impacto.
 
-### 7.4 Infraestructura vial y duración de los accidentes
+### Infraestructura vial y duración de los accidentes
 
 El semáforo es el tipo de infraestructura con mayor número total de accidentes (20,842), seguido de intersecciones y cruces peatonales. Sin embargo, la señal Stop presenta la mayor tasa de severidad alta relativa (4.0%), lo que la posiciona como el punto de infraestructura más crítico en términos de gravedad. Respecto a la duración, los accidentes de severidad muy grave (nivel 4) tienen una duración promedio de 235 minutos, casi el doble que los de severidad moderada (129 minutos). Climáticamente, la lluvia helada ligera (Light Freezing Drizzle) prolonga más los accidentes (271 min), mientras que a nivel estatal, Oklahoma (OK) registra la mayor duración promedio con más de 1,100 minutos, muy por encima del resto.
 
-### 7.5 Distribución general por severidad
+### Distribución general por severidad
 
 La gran mayoría de accidentes registrados en 2023 corresponden al nivel de severidad moderada (nivel 2), representando el 97.2% del total. Los accidentes de severidad muy grave (nivel 4) constituyen apenas el 2.8%, equivalente a 6,614 casos, con una distancia promedio de impacto vial de 0.91 millas. Aunque minoritarios en proporción, estos accidentes representan los eventos de mayor costo social y operativo, siendo el foco principal de los KPIs de severidad definidos para este datamart.
 
