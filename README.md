@@ -89,7 +89,7 @@ Construir un datamart que habilite consultas rápidas, agregaciones multidimensi
 - ¿En qué horarios y días de la semana ocurren más accidentes de alta severidad?
 - ¿Qué estados y ciudades concentran la mayor cantidad de accidentes graves?
 - ¿Qué condiciones climáticas están más asociadas a accidentes de severidad 3 y 4?
-- ¿Qué tipo de infraestructura vial (cruces, semáforos, intersecciones) está más presente en accidentes graves?
+- ¿Qué tipo de infraestructura vial (cruces, semáforos, intersecciones) está más presente en accidentes graves (severidad 3 y 4)?
 - ¿Cuál es la duración promedio de los accidentes según severidad, clima y zona geográfica?
 
 ### 4.3 KPIs Propuestos para el Datamart
@@ -98,7 +98,6 @@ Construir un datamart que habilite consultas rápidas, agregaciones multidimensi
 - **Duración promedio del accidente:** media de `duracion_minutos` por dimensión (severidad, clima, lugar, franja horaria).
 - **Accidentes por zona geográfica:** conteo y densidad de accidentes agrupados por estado, ciudad y condado.
 - **Accidentalidad por condición climática:** distribución de accidentes y severidad promedio según `Weather_Condition`.
-- **Índice de infraestructura crítica:** proporción de accidentes graves ocurridos cerca de cruces, semáforos o intersecciones.
 - **Accidentes por franja horaria:** distribución de accidentes según hora del día, día de la semana y condición de luz (DimCivilTwilight).
 
 Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimensiones conformadas (fecha, lugar, clima, severidad) para permitir cortes consistentes y comparables.
@@ -129,7 +128,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | stopID | INT (FK) | Llave foránea hacia DimStop. |
 | trafficID | INT (FK) | Llave foránea hacia DimTraffic. |
 | civilTwilightID | INT (FK) | Llave foránea hacia DimCivilTwilight. |
-| duracion_minutos | FLOAT | Duración del accidente en minutos, calculada como diferencia entre `End_Time` y `Start_Time`. |
+| duracion_minutos | INT | Duración del accidente en minutos, calculada como diferencia entre `End_Time` y `Start_Time`. |
 | distance | FLOAT | Longitud del tramo vial afectado por el accidente, en millas (`Distance(mi)`). |
 | temperature | FLOAT | Temperatura ambiente al momento del accidente, en grados Fahrenheit (`Temperature(F)`). |
 | wind_chill | FLOAT | Sensación térmica por viento al momento del accidente, en grados Fahrenheit (`Wind_Chill(F)`). |
@@ -156,7 +155,7 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | mes | INT | Mes de ocurrencia del accidente (1–12). |
 | dia | INT | Día del mes de ocurrencia del accidente (1–31). |
 | hora | INT | Hora de inicio del accidente (0–23). |
-| dia_semana | INT | Día de la semana (1 = lunes, 7 = domingo). |
+| dia_semana | VARCHAR(20) | Día de la semana |
 | es_fin_semana | BIT | Indicador de fin de semana (1 = sábado o domingo, 0 = día hábil). |
 
 ### 6.4 DimUbicacionGeo
@@ -172,10 +171,10 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador del lugar. |
-| street | NVARCHAR(200) | Nombre de la calle donde ocurrió el accidente (`Street`). |
+| street | NVARCHAR(255) | Nombre de la calle donde ocurrió el accidente (`Street`). |
 | city | NVARCHAR(100) | Nombre de la ciudad donde ocurrió el accidente (`City`). |
 | county | NVARCHAR(100) | Nombre del condado donde ocurrió el accidente (`County`). |
-| state | NVARCHAR(10) | Código del estado donde ocurrió el accidente (`State`). |
+| state | NVARCHAR(50) | Código del estado donde ocurrió el accidente (`State`). |
 | zipcode | NVARCHAR(20) | Código postal de la zona del accidente (`Zipcode`). |
 | timezone | NVARCHAR(50) | Zona horaria donde ocurrió el accidente (`Timezone`). |
 
@@ -191,46 +190,83 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de cruce peatonal. |
-| crossing | BIT | Indica si el accidente ocurrió cerca de un cruce peatonal (True/False) (`Crossing`). |
+| crossing | NVARCHAR(10) | Indica si el accidente ocurrió cerca de un cruce peatonal (True/False) (`Crossing`). |
 
 ### 6.8 DimJunction
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de intersección vial. |
-| junction | BIT | Indica si el accidente ocurrió cerca de una intersección vial (True/False) (`Junction`). |
+| junction | NVARCHAR(10) | Indica si el accidente ocurrió cerca de una intersección vial (True/False) (`Junction`). |
 
 ### 6.9 DimStation
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de estación. |
-| station | BIT | Indica si el accidente ocurrió cerca de una estación de transporte público (True/False) (`Station`). |
+| station | NVARCHAR(10) | Indica si el accidente ocurrió cerca de una estación de transporte público (True/False) (`Station`). |
 
 ### 6.10 DimStop
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de parada. |
-| stop | BIT | Indica si el accidente ocurrió cerca de una señal de stop o parada de tránsito (True/False) (`Stop`). |
+| stop | NVARCHAR(10) | Indica si el accidente ocurrió cerca de una señal de stop o parada de tránsito (True/False) (`Stop`). |
 
 ### 6.11 DimTraffic
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de señal de tráfico. |
-| traffic_signal | BIT | Indica si el accidente ocurrió cerca de un semáforo (True/False) (`Traffic_Signal`). |
+| traffic_signal | NVARCHAR(10) | Indica si el accidente ocurrió cerca de un semáforo (True/False) (`Traffic_Signal`). |
 
 ### 6.12 DimCivilTwilight
 
 | Columna | Tipo | Descripción |
 |---|---|---|
 | id | INT (PK) | Identificador de condición de luz civil. |
-| civil_twilight | NVARCHAR(10) | Indica si el accidente ocurrió durante el día o la noche según el crepúsculo civil (Day/Night) (`Civil_Twilight`). |
+| civil_twilight | NVARCHAR(20) | Indica si el accidente ocurrió durante el día o la noche según el crepúsculo civil (Day/Night) (`Civil_Twilight`). |
 
 ---
 
-## 7. Referencias
+## 7. Interpretación del Dashboard (Año 2023)
+
+Para un análisis más delimitado y consistente, el análisis se centró exclusivamente en los datos correspondientes al año 2023, período en el que se registraron un total de 238,423 accidentes de tránsito en todo el territorio estadounidense.
+
+### 7.1 Patrones temporales y condición de luz
+
+La distribución horaria de accidentes revela una concentración marcada en las franjas de la mañana (6:00–9:00) y la tarde (15:00–18:00), coincidiendo con las horas pico de desplazamiento laboral. Los accidentes de severidad 2 dominan en términos de volumen, mientras que los de severidad 4 presentan mayor frecuencia relativa en horas nocturnas. Por día de la semana, martes y miércoles concentran los mayores volúmenes totales, con una proporción notablemente más alta de accidentes nocturnos respecto a los diurnos. Los fines de semana, aunque con menor volumen total, presentan una distribución nocturna más equilibrada, lo que sugiere un perfil de riesgo diferenciado.
+
+### 7.2 Distribución geográfica y severidad
+
+California (CA) es el estado con mayor cantidad absoluta de accidentes, superando los 70,000 registros, seguido de Florida (FL) y Texas (TX). Sin embargo, Virginia (VA) destaca como el estado con la severidad promedio más alta (1,107 accidentes graves), lo que indica que la concentración de accidentes totales no necesariamente coincide con la mayor gravedad relativa. A nivel de ciudades, Atlanta y Chicago lideran en accidentes de alta severidad (3–4), mientras que Griffin presenta la severidad promedio más elevada del ranking, señalando focos de riesgo crítico que no corresponden a las ciudades más pobladas.
+
+### 7.3 Condiciones climáticas asociadas a accidentalidad
+
+El clima despejado (Fair) concentra la mayor cantidad de accidentes en términos absolutos, seguido de condiciones nubladas (Cloudy y Mostly Cloudy). Este patrón se explica por la mayor exposición al tráfico bajo cielo abierto. No obstante, al analizar exclusivamente los accidentes de severidad 3–4, las mismas condiciones lideran el ranking, lo que refuerza que el volumen de exposición es el factor determinante. Condiciones adversas como lluvia ligera, nieve ligera y niebla, si bien con menores frecuencias absolutas, presentan severidades promedio más elevadas, evidenciando un riesgo diferencial en su impacto.
+
+### 7.4 Infraestructura vial y duración de los accidentes
+
+El semáforo es el tipo de infraestructura con mayor número total de accidentes (20,842), seguido de intersecciones y cruces peatonales. Sin embargo, la señal Stop presenta la mayor tasa de severidad alta relativa (4.0%), lo que la posiciona como el punto de infraestructura más crítico en términos de gravedad. Respecto a la duración, los accidentes de severidad muy grave (nivel 4) tienen una duración promedio de 235 minutos, casi el doble que los de severidad moderada (129 minutos). Climáticamente, la lluvia helada ligera (Light Freezing Drizzle) prolonga más los accidentes (271 min), mientras que a nivel estatal, Oklahoma (OK) registra la mayor duración promedio con más de 1,100 minutos, muy por encima del resto.
+
+### 7.5 Distribución general por severidad
+
+La gran mayoría de accidentes registrados en 2023 corresponden al nivel de severidad moderada (nivel 2), representando el 97.2% del total. Los accidentes de severidad muy grave (nivel 4) constituyen apenas el 2.8%, equivalente a 6,614 casos, con una distancia promedio de impacto vial de 0.91 millas. Aunque minoritarios en proporción, estos accidentes representan los eventos de mayor costo social y operativo, siendo el foco principal de los KPIs de severidad definidos para este datamart.
+
+---
+## 8. Conclusiones
+
+La construcción del datamart permitió estructurar más de 7.5 millones de registros del período 2016–2023 en un esquema estrella con 12 dimensiones, habilitando consultas multidimensionales eficientes sobre severidad, clima, geografía y tiempo.
+
+El proceso ETL implementado en Python garantizó la integridad referencial del modelo y la trazabilidad de cada registro, asegurando que los KPIs calculados sobre la tabla de hechos reflejen datos reales y verificables.
+
+Los KPIs definidos demostraron ser más informativos que un simple conteo de accidentes: estados como Virginia y ciudades como Griffin presentan alta severidad promedio sin liderar en volumen total, evidenciando que frecuencia y gravedad deben analizarse de forma conjunta para orientar decisiones preventivas.
+
+El dashboard en Dash/Plotly respondió directamente las preguntas de negocio planteadas, identificando los horarios pico de siniestralidad, las condiciones climáticas de mayor riesgo relativo y los puntos de infraestructura vial con mayor tasa de accidentes graves.
+
+El proyecto confirma que la estructuración de datos masivos en un modelo dimensional, combinada con visualizaciones interactivas, genera información accionable para la gestión del tránsito, la planificación urbana y la asignación de recursos de emergencia.
+
+## 9. Referencias
 
 Chaudhuri, S., & Dayal, U. (1997). An overview of data warehousing and OLAP technology. ACM SIGMOD Record. https://dl.acm.org/doi/10.1145/248603.248616
 
