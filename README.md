@@ -229,42 +229,42 @@ Estos KPIs se calcularán sobre la tabla de hechos `FactAccidente` con dimension
 
 ---
 
-## 7. Interpretación del Dashboard (Año 2023)
+## 7. Interpretación del Dashboard (Período 2016–2023)
 
-Para un análisis más delimitado y consistente, el análisis se centró exclusivamente en los datos correspondientes al año 2023, período en el que se registraron un total de 238,423 accidentes de tránsito en todo el territorio estadounidense.
+Para obtener una visión integral de la accidentalidad vial en Estados Unidos, el análisis se realizó sobre el período comprendido entre 2016 y 2023, considerando un total de 7,533,737 accidentes registrados. A partir del datamart construido se definieron indicadores clave que permitieron analizar patrones temporales, geográficos, climáticos y de infraestructura vial mediante visualizaciones interactivas. Los KPIs muestran que durante el período analizado se registraron 1,463,560 accidentes de alta severidad, equivalentes al 19.4 % del total, con una duración promedio de 421.1 minutos, una distancia promedio afectada de 0.56 millas y siendo 2022 el año con mayor número de accidentes.
 
-### Patrones temporales y condición de luz
+### Patrones temporales
 
-La distribución horaria de accidentes revela una concentración marcada en las franjas de la mañana (6:00–9:00) y la tarde (15:00–18:00), coincidiendo con las horas pico de desplazamiento laboral. Los accidentes de severidad 2 dominan en términos de volumen, mientras que los de severidad 4 presentan mayor frecuencia relativa en horas nocturnas. Por día de la semana, martes y miércoles concentran los mayores volúmenes totales, con una proporción notablemente más alta de accidentes nocturnos respecto a los diurnos. Los fines de semana, aunque con menor volumen total, presentan una distribución nocturna más equilibrada, lo que sugiere un perfil de riesgo diferenciado.
+La distribución horaria evidencia una marcada concentración de accidentes entre las 06:00 y las 18:00 horas, con dos picos claramente definidos alrededor de las 07:00 y 16:00 horas, coincidiendo con los horarios de mayor movilidad diaria. Este comportamiento refleja el incremento del flujo vehicular durante las jornadas laborales y confirma que los periodos de mayor exposición al tránsito concentran la mayor cantidad de incidentes.
 
 ### Distribución geográfica y severidad
 
-California (CA) es el estado con mayor cantidad absoluta de accidentes, superando los 70,000 registros, seguido de Florida (FL) y Texas (TX). Sin embargo, Virginia (VA) destaca como el estado con la severidad promedio más alta (1,107 accidentes graves), lo que indica que la concentración de accidentes totales no necesariamente coincide con la mayor gravedad relativa. A nivel de ciudades, Atlanta y Chicago lideran en accidentes de alta severidad (3–4), mientras que Griffin presenta la severidad promedio más elevada del ranking, señalando focos de riesgo crítico que no corresponden a las ciudades más pobladas.
+El análisis territorial muestra que California (CA) concentra el mayor número de accidentes registrados durante el período de estudio, seguida por Florida (FL) y Texas (TX). En un segundo nivel aparecen estados como Carolina del Sur (SC), Nueva York (NY) y Carolina del Norte (NC), evidenciando que la accidentalidad se concentra principalmente en estados con alta densidad poblacional y elevado flujo vehicular. A nivel urbano, Los Ángeles, Dallas y Atlanta lideran el número de accidentes de alta severidad, consolidándose como las ciudades con mayor concentración de eventos críticos dentro del conjunto analizado.
 
-### Condiciones climáticas asociadas a accidentalidad
+### Condiciones climáticas asociadas a la accidentalidad
 
-El clima despejado (Fair) concentra la mayor cantidad de accidentes en términos absolutos, seguido de condiciones nubladas (Cloudy y Mostly Cloudy). Este patrón se explica por la mayor exposición al tráfico bajo cielo abierto. No obstante, al analizar exclusivamente los accidentes de severidad 3–4, las mismas condiciones lideran el ranking, lo que refuerza que el volumen de exposición es el factor determinante. Condiciones adversas como lluvia ligera, nieve ligera y niebla, si bien con menores frecuencias absolutas, presentan severidades promedio más elevadas, evidenciando un riesgo diferencial en su impacto.
+Las condiciones climáticas clasificadas como Fair, Mostly Cloudy y Cloudy concentran la mayor cantidad absoluta de accidentes, debido a que corresponden a los escenarios meteorológicos más frecuentes durante la circulación diaria. No obstante, el análisis relativo evidencia que fenómenos como fuertes lluvias acompañadas de tormentas eléctricas, lluvias ligeras con tormenta y otras condiciones meteorológicas adversas presentan una mayor tasa de gravedad, lo que indica que, aunque ocurren con menor frecuencia, incrementan significativamente el riesgo de que un accidente tenga consecuencias más severas.
 
 ### Infraestructura vial y duración de los accidentes
 
-El semáforo es el tipo de infraestructura con mayor número total de accidentes (20,842), seguido de intersecciones y cruces peatonales. Sin embargo, la señal Stop presenta la mayor tasa de severidad alta relativa (4.0%), lo que la posiciona como el punto de infraestructura más crítico en términos de gravedad. Respecto a la duración, los accidentes de severidad muy grave (nivel 4) tienen una duración promedio de 235 minutos, casi el doble que los de severidad moderada (129 minutos). Climáticamente, la lluvia helada ligera (Light Freezing Drizzle) prolonga más los accidentes (271 min), mientras que a nivel estatal, Oklahoma (OK) registra la mayor duración promedio con más de 1,100 minutos, muy por encima del resto.
+Entre los distintos elementos de infraestructura vial, los semáforos concentran el mayor número absoluto de accidentes, con 20,842 registros, debido a su amplia presencia dentro de la red vial urbana. Sin embargo, las señales de Stop presentan la mayor proporción relativa de accidentes de alta severidad (4.0 %), lo que las convierte en uno de los elementos con mayor riesgo relativo. Asimismo, los accidentes clasificados con severidad 4 presentan una duración promedio de 235 minutos, considerablemente superior a la observada en los accidentes de severidad 2 (129 minutos). En cuanto a las condiciones ambientales, Light Freezing Drizzle registra la mayor duración promedio de los incidentes (271 minutos), mientras que Oklahoma (OK) presenta la mayor duración promedio a nivel estatal, superando los 1,100 minutos.
 
 ### Distribución general por severidad
 
-La gran mayoría de accidentes registrados en 2023 corresponden al nivel de severidad moderada (nivel 2), representando el 97.2% del total. Los accidentes de severidad muy grave (nivel 4) constituyen apenas el 2.8%, equivalente a 6,614 casos, con una distancia promedio de impacto vial de 0.91 millas. Aunque minoritarios en proporción, estos accidentes representan los eventos de mayor costo social y operativo, siendo el foco principal de los KPIs de severidad definidos para este datamart.
+La distribución por niveles de severidad muestra que la mayor parte de los accidentes corresponde a la severidad 2, con aproximadamente 6.0 millones de registros, equivalentes al 79.7 % del total analizado. Por su parte, los accidentes clasificados como severidad 4 representan 195,222 registros, equivalentes al 2.59 % del total. Aunque estos últimos constituyen una proporción relativamente pequeña, representan los eventos con mayor impacto operativo y social, razón por la cual constituyen el principal foco de análisis dentro de los indicadores estratégicos definidos para el datamart.
 
 ---
 ## 8. Conclusiones
 
-La construcción del datamart permitió estructurar más de 7.5 millones de registros del período 2016–2023 en un esquema estrella con 12 dimensiones, habilitando consultas multidimensionales eficientes sobre severidad, clima, geografía y tiempo.
+La construcción del datamart permitió estructurar más de 7.5 millones de registros correspondientes al período 2016–2023 bajo un esquema estrella conformado por una tabla de hechos y doce dimensiones, facilitando consultas multidimensionales eficientes sobre severidad, clima, ubicación geográfica e infraestructura vial.
 
-El proceso ETL implementado en Python garantizó la integridad referencial del modelo y la trazabilidad de cada registro, asegurando que los KPIs calculados sobre la tabla de hechos reflejen datos reales y verificables.
+El proceso ETL desarrollado en Python garantizó la correcta integración y transformación de la información, preservando la integridad referencial del modelo dimensional y asegurando que los indicadores obtenidos a partir de la tabla de hechos representen información consistente y confiable para el análisis.
 
-Los KPIs definidos demostraron ser más informativos que un simple conteo de accidentes: estados como Virginia y ciudades como Griffin presentan alta severidad promedio sin liderar en volumen total, evidenciando que frecuencia y gravedad deben analizarse de forma conjunta para orientar decisiones preventivas.
+Los KPIs implementados permitieron identificar patrones relevantes que no son evidentes mediante un simple conteo de accidentes. El análisis conjunto de variables temporales, geográficas, climáticas y de infraestructura permitió reconocer horarios críticos de circulación, estados con mayor concentración de accidentes, ciudades con elevada incidencia de eventos graves y condiciones climáticas que incrementan el riesgo relativo de severidad.
 
-El dashboard en Dash/Plotly respondió directamente las preguntas de negocio planteadas, identificando los horarios pico de siniestralidad, las condiciones climáticas de mayor riesgo relativo y los puntos de infraestructura vial con mayor tasa de accidentes graves.
+El dashboard desarrollado proporcionó una herramienta interactiva para responder las preguntas de negocio planteadas, facilitando el análisis de la accidentalidad desde diferentes perspectivas mediante filtros dinámicos y visualizaciones orientadas a la toma de decisiones. La integración de KPIs y gráficos permitió transformar grandes volúmenes de datos en información comprensible y útil para la gestión de la seguridad vial.
 
-El proyecto confirma que la estructuración de datos masivos en un modelo dimensional, combinada con visualizaciones interactivas, genera información accionable para la gestión del tránsito, la planificación urbana y la asignación de recursos de emergencia.
+Finalmente, el proyecto demuestra que la aplicación de técnicas de Business Intelligence, apoyadas en un modelo dimensional y herramientas de visualización interactivas, constituye una estrategia efectiva para convertir datos masivos en conocimiento accionable, contribuyendo al diseño de políticas de prevención, la planificación urbana y la asignación eficiente de recursos destinados a la reducción de la siniestralidad vial.
 
 ## 9. Referencias
 
