@@ -90,7 +90,6 @@ Construir un datamart que habilite consultas rápidas, agregaciones multidimensi
 - ¿Qué estados y ciudades concentran la mayor cantidad de accidentes graves?
 - ¿Qué condiciones climáticas están más asociadas a accidentes de severidad 3 y 4?
 - ¿Qué tipo de infraestructura vial (cruces, semáforos, intersecciones) está más presente en accidentes graves (severidad 3 y 4)?
-- ¿Cuál es la duración promedio de los accidentes según severidad, clima y zona geográfica?
 
 ### 4.3 KPIs Propuestos para el Datamart
 
