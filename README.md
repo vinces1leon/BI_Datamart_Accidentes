@@ -247,7 +247,7 @@ Las condiciones climáticas clasificadas como Fair, Mostly Cloudy y Cloudy conce
 
 ### Infraestructura vial y duración de los accidentes
 
-Entre los distintos elementos de infraestructura vial, los semáforos concentran el mayor número absoluto de accidentes, con 1.12 millones registros, debido a su amplia presencia dentro de la red vial urbana. Sin embargo, las intersecciones presentan la mayor proporción relativa de accidentes de alta severidad (26.0 %), lo que las convierte en uno de los elementos con mayor riesgo relativo. Asimismo, los accidentes clasificados con severidad 4 presentan una duración promedio de 235 minutos, considerablemente superior a la observada en los accidentes de severidad 2 (129 minutos). En cuanto a las condiciones ambientales, Light Freezing Drizzle registra la mayor duración promedio de los incidentes (271 minutos), mientras que Oklahoma (OK) presenta la mayor duración promedio a nivel estatal, superando los 1,100 minutos.
+Entre los distintos elementos de infraestructura vial, los semáforos concentran el mayor número absoluto de accidentes, con 1.12 millones registros, debido a su amplia presencia dentro de la red vial urbana. Sin embargo, las intersecciones presentan la mayor proporción relativa de accidentes de alta severidad (26.0 %), lo que las convierte en uno de los elementos con mayor riesgo relativo.
 
 ### Distribución general por severidad
 
